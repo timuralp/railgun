@@ -88,7 +88,7 @@ puts result.exitcode
 We can also supply arguments to the command. Imagine the _main_ method accepts a
 string specifying the string to output. To do that, we can modify the code as
 follows:
-```
+```ruby
 require 'railgun'
 
 client = Railgun::Client.new
