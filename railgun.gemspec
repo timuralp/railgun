@@ -8,6 +8,6 @@ Gem::Specification.new do |s|
   s.email = 'timur.alperovich@gmail.com'
   s.description = 'Provides a Ruby client for the nailgun server.'
 
-  s.files         = [ 'lib/railgun.rb' ]
+  s.files         = `git ls-files`.split("\n")
   s.require_paths = [ 'lib' ]
 end
