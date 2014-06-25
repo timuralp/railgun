@@ -88,7 +88,7 @@ module Railgun
     # @return [Railgun::Client::Result] The result of execution with stdout,
     #                                   stderr, and the exit code available.
     def execute(command, options = {})
-      @socket_lock.synchronize { connect if @socket.nil? }
+      connect
 
       pass_arguments(options.fetch(:args, []))
 
