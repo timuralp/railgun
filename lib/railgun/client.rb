@@ -34,25 +34,16 @@ module Railgun
 
     Header = Struct.new(:type, :length)
     class Header
+      HEADER_FORMAT = 'L>a'
+
       def pack
-        header = []
-        header << ((length >> 24) & 0xff)
-        header << ((length >> 16) & 0xff)
-        header << ((length >> 8) & 0xff)
-        header << (length & 0xff)
-        header << NAILGUN_MESSAGE_TYPES[type]
-        header.pack('CCCCa')
+        header = [length, NAILGUN_MESSAGE_TYPES[type]]
+        header.pack(HEADER_FORMAT)
       end
 
       def self.unpack(message)
-        length_string = message[0..-2]
-        length_a = length_string.unpack('CCCC')
-        length = ((length_a[0] << 24) & 0xff000000) |
-                 ((length_a[1] << 16) & 0x00ff0000) |
-                 ((length_a[2] << 8)  & 0x0000ff00) |
-                 ((length_a[3])       & 0x000000ff);
-
-        type = NAILGUN_MESSAGE_MAP[message[-1]]
+        length, type = message.unpack(HEADER_FORMAT)
+        type = NAILGUN_MESSAGE_MAP[type]
         Header.new(type, length)
       end
     end
